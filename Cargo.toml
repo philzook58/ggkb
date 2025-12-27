@@ -1,0 +1,10 @@
+[package]
+name = "ggkb"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.53", features = ["derive"] }
+num-bigint = "0.4.6"
+radix_trie = "0.3.0"
+serde = { version = "1.0.228", features = ["derive"] }

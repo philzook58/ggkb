@@ -7,6 +7,7 @@ use std::{
 
 pub mod multiset;
 pub mod poly;
+pub mod term;
 pub mod unionfind;
 
 pub type Id = usize; // Probably should consider going smaller.
@@ -158,6 +159,8 @@ pub fn saturate(eqs: Vec<(Vec<Id>, Vec<Id>)>) -> Vec<(Vec<Id>, Vec<Id>)> {
     rules
 }
 
+// quickcheck test confluence of resulting system?
+
 fn parse_term(s: &str, names: &HashMap<String, Id>) -> Result<Vec<Id>, String> {
     s.split_whitespace()
         .map(|name| {
@@ -215,18 +218,12 @@ mod string_rewriting_tests {
     }
     #[test]
     fn test_saturate() {
-        /*
-        let eqs = vec![(vec![1, 2], vec![2, 1]), (vec![2, 3], vec![3, 2])];
+        let eqs = vec![(vec![1, 2], vec![2, 1]), (vec![1, 3], vec![3, 1])];
         let rules = saturate(eqs);
         assert_eq!(
             rules,
-            vec![
-                (vec![1, 2], vec![2, 1]),
-                (vec![2, 3], vec![3, 2]),
-                (vec![1, 3], vec![3, 1])
-            ]
+            vec![(vec![2, 1], vec![1, 2]), (vec![3, 1], vec![1, 3])]
         );
-        */
 
         let eqs = vec![(vec![1, 1], vec![2]), (vec![1, 1, 1], vec![3])];
         let rules = saturate(eqs);
